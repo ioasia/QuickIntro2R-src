@@ -323,17 +323,17 @@ Note that we only have to type enough of the column name to uniquely identify th
 
 # Workflow
 
-Let's put all parts so far together to look at a standard situation: you have some data in a file, which you want to analyse; the results from this analysis are to be included in a report. For this exercise, let's use the qPCR data from before to demonstrate how this can be done in R. 
+Let's put all parts together to look at a standard situation: you have some data in a file, which you want to analyse; the results from this analysis are to be included in a report. For this exercise, let's use the qPCR data from before to demonstrate how this can be done in R. 
 
-Personally, I would break down the workflow breaksas follows:
+I suggest breaking down the workflow as follows:
 
-1. Prepare: put the data file(s) into a folder on that harddisk that is easy to find / access. 
+1. Prepare: put the data file(s) into a folder on the harddisk that is easy to find & access. 
 
 2. Start R/RStudio
 
 3. Set the working directory, load the data
 
-4. Run some descriptives: this includes calculating descriptive statistics like mean or standard deviation, as well as plotting the data. Descriptives can serve simply as quality control of the data, or they may be included in the report.
+4. Run some descriptives: this includes calculating descriptive statistics like mean or standard deviation, as well as plotting the data. Descriptives can be a simple quality control of the data, or they may be included in the report.
 
 5. Run the analysis: the main analysis of interest, generally involving some statistical inference (estimates, confidence intervals, p-values).
 
@@ -341,19 +341,17 @@ Personally, I would break down the workflow breaksas follows:
 
 7. Shut down R/RStudio: this requires a decision whether to save the R objects generated during the workflow.
 
-Let's look at some of these steps in more detail.
-
 ## Finding & loading data
 
-As demonstrated above, you can specify the full path to any file on the harddisk for reading it in via `read.table`. However, I would recommend that you set R's default directory, the _working directory_, right at the start of the analysis. This makes it easier to keep track of any files that you may generate while working on this specific data.
+As demonstrated above, you can specify the full path to any file on the harddisk for reading it in via `read.table`. However, I recommend setting R's default directory, the _working directory_, right at the start of the analysis. This makes it easier to keep track of files that you generate while working on this specific data.
 
-The working directory can be set via the command prompt:
+The working directory can be set at the command prompt:
 ```{r, eval = c(1,3)}
 setwd("Z:/OmicsDataAnalysis/")
 #setwd("~/@ownCloudKI/OmicsDataAnalysis/")
 dir()
 ```
-Note that my working directory has a number of sub-folders that organize my project, which is generally a good idea if your project involves more than a handful of files.
+Note that my working directory has a number of sub-folders, which is generally a good idea if your project involves more than a handful of files.
 
 After setting the working directory, all further file operations that do not explicity start at the root of the file system will be _relative_ to the working directory. So in order to read the file `qPCR.txt` in sub-folder `Data`, it is sufficient to run^[Another round of tab-expansions: once you have placed the cursor between the quotation marks, you can start to type the file name, and hit tab to show a list of available files in the working directory.]
 ```{r}
@@ -370,7 +368,7 @@ Alternatively, you can use the GUI to set the working directory: both R and RStu
 
 ## Descriptive statistics
 
-A useful function for generic descriptives is `summary`: if the argument is a numerical vector, it will display a number of location measures (minimum, maximum, mean, median and the first and third quartile); if the argument is either a character or factor vector, the function will return a frequency table. Coveniently, when the argument is a data frame, it will return a summary for each variable, depending on type: 
+A useful function for generic descriptives is `summary`: if the argument is a numerical vector, it will display a number of location measures (minimum, maximum, mean, median and the first and third quartile); if the argument is either a factor vector, the function will return a frequency table. Coveniently, when the argument is a data frame, it will return a summary for each variable, depending on type: 
 ```{r, R.options = list(width = 75)}
 summary(ex1)
 ```
@@ -378,13 +376,13 @@ This can be combined with other summary statistics of interest, like `sd` for st
  
 ## Plots
 
-R has a very rich set of graphical functions, including three independent systems for generating high-level plots. The examples shown here are from the oldest system, the _base graphics_, which is directly available in base R.^[The other two systems are ggplot2 and lattice, respectively. Both require that an add-on package of the same name is installed and loaded.]
+R has a very rich set of graphical functions, including three independent systems for generating high-level plots. The examples shown here are from the oldest system, the _base graphics_, which is directly available in R.^[The other two systems are ggplot2 and lattice, respectively. Both require that an add-on package of the same name is installed and loaded.]
 
 The function `hist` takes a numerical vector as argument and draws a histogram in the current plotting window:
 ```{r, fig.margin = TRUE, fig.cap = 'Histogram of DeltaCt', fig.width=3.5, fig.height=3.5}
 hist(ex1$DeltaCt)
 ```
-The function `boxplot` can draw boxplots of the values of a given variable for separate groups of subjects given by another variable. This command draws separate boxplots for the relative strength of gene expression `DeltaCt` for the two groups of measurements as seen in grouping variable `Sample`:
+The function `boxplot` can draw boxplots of values of a given variable for separate groups of subjects, given by another variable. This draws separate boxplots for the relative strength of gene expression `DeltaCt` for the two groups of measurements as seen in grouping variable `Sample`:
 ```{r, fig.margin = TRUE, fig.cap = 'Boxplot of DeltaCt by group', fig.width=3.5, fig.height=3.5}
 boxplot(DeltaCt ~ Sample, ex1)
 ```
@@ -392,20 +390,20 @@ The first argument in this function call is a _formula_, an R construction that 
 
 With regard to the plot itself, we see that the expression levels are clearly higher among controls than among cases, and that there is a suspiciously large value among the controls - interesting for the report?
 
-Base graphics look a rather old-fashioned, but are fairly straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the range of this document. 
+Base graphics look a rather old-fashioned, but are straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the range of this document.^[See however ????] 
 
 ## Statistical tests
 
-For the current example, a simple t-test for the null hypothesis that the mean gene expression level (averaged across all concentrations) is the same for both treated plants and untreated controls seems a reasonable sort of inference. This can be run via the function `t.test`: 
+For the current example, a simple t-test for the null hypothesis that the mean gene expression level (averaged across all concentrations) is the same for both treated plants and untreated controls seems a reasonable sort of inference. This can be done via the function `t.test`: 
 ```{r}
 t.test(DeltaCt ~ Sample, data = ex1)
 ```               
-The function call and the result for this test are structured very similar to most other basic tests, so let's have a look:
+The function call and the result for this test are very similar to most other basic tests, so let's have a look:
 
-* The outcome and the grouping variable as well as the data frame where they live are specified as before via a formula.
-* The first row of the output states what test was used: here, the Walch t-test, which does not assume equal variances between groups (like the Student t-test does).
+* The outcome and grouping variable as well as the data frame where they live are specified as before via a formula.
+* The first row of the output states the test used: here, the Walch t-test, which does not assume equal variances between groups (which the Student t-test does).
 * This is followed by information on the data used, the test statistic, and the p-value for the null hypothesis; here, a p-value of less than 3.5E-5 indicates that the difference is statistically significant at most conventional significance levels. 
-* The test does not state the null hypothesis, but the alternative hypothesis: here, a simple two-sided alternative (i.e. we reject the null hypothesis of equality both for large negative and large postive mean differences).
+* The test does not state the null hypothesis, but the alternative hypothesis: here, a simple two-sided alternative, i.e. we reject the null hypothesis of equal means for both large negative and large postive mean differences.
 * This is followed by a number of descriptive statistics, here: a 95% confidence interval for the mean difference between groups, and the respective group means. 
 
 The results here are very similar to the results in Table 3 of the original publication (and would be identical if we had chosen the Student t-test instead of Walch.)
@@ -421,11 +419,10 @@ Therefore, results should generally be exported as part of an analysis script th
 
 ## Shut down R
 
-Terminating an R session is easy: select the `Quit`-entry in the `File`-menu, kill the program window, or use the command `q()` at the console. 
+Terminating an R session is easy: select the `Quit`-entry in the `File`-menu, or kill the program window, or use the command `q()` in the console. 
+However, by default, all data, results, and plots generated during an R/RStudio session will be lost when quitting R, unless you take steps to save them for later. Therefore, by default, R will always offer to save the _workspace image_ when you quit a session: this means that all currently defined objects will be saved to a file called `.RData` in the current working directory. This file can later be loaded via the `Load workspace`-entry in the `Session`-menu.^[In base R, in the File-menu], or via the `load()` command in the console.^[If the current working directory is also the start-up directory for R/RStudio, this .RData file will be loaded automatically at the start of the next session, with a message in the console.]
 
-However: by default, all data, results, and plots generated during an R/RStudio session will be lost when quitting R, unless you take steps to save them for later. Therefore, by default, R will always offer to save the _workspace image_ when you quit a session: this means that all currently defined objects will be saved to a file called `.RData` in the current working directory. This file can later be loaded via the `Load workspace`-entry in the `Session`-menu.^[In base R, in the File-menu], or via the `load()` command in the console.^[If the current working directory is also the start.up directory for R/RStudio, this .RData file will be loaded automatically at the start of the next session, with a message in the console.]
-
-Note that you can save the current workspace image at any time via the `Environment`-tab or the `save.image()`-command.
+Note that you can save the current workspace image at any time via the `Environment`-tab or the `save.image()`-command.^[Image: Environment pane]
 
 In addition, RStudio will also save all the R commands used in the current R session (as seen in the `History`-pane) to a file `.Rhistory` in the current working directory.^[By default, RStudio will always save the history, but base R only when also saving the workspace image.] This is a simple text file that can be opened in any text editor, or re-loaded into R via `History`-pane or the `loadhistory()`-command. 
 
