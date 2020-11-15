@@ -26,7 +26,14 @@ This work is licensed under the Creative Commons Attribution-NonCommercial-Share
 
 # Background
 
-R is a free software environment for statistical computing and graphics^[[www.r-project.org](https://www.r-project.org/)]. Specifically, R is 
+R is a free software environment for statistical computing and graphics. 
+
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/00_Rproject_4_0_3.png}\caption{R homepage \url{https://www.r-project.org/}}
+\end{marginfigure}
+
+Specifically, R is 
 
 1. a program for statistical data analysis. Compared to software with similar functionality, R has a strong focus on interactive analysis (unlike the typical batch analysis in SAS) at a command prompt (unlike the graphical user interface of SPSS). 
 
@@ -42,14 +49,14 @@ The RStudio program window is typically split into up to four different quadrant
 
 \begin{figure*}
 \centering 
-\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10.png}\caption{RStudio running R 4.0.3}
+\includegraphics[width=\textwidth]{figures/01_RStudio_1_3_1093_Windows10.png}\caption{RStudio running R 4.0.3}
 \end{figure*}
 
-* The large pane to the left showing the R start-up message is the _console_. This is the main window, where the user types commands, and numerical results are displayed. The RStudio console is identical in function and appearance to the console window in the underlying R software. 
+* The large pane to the left showing the R start-up message is the **console**. This is the main window, where the user types commands, and numerical results are displayed. The RStudio console is identical in function and appearance to the console window in the underlying R software. 
 
-* The smaller top right pane shows the _Environment_ tab, which displays all currently defined objects (like data sets or analysis results) in a the current R session. Figure 1 shows RStudio at the start of a session, so objects are defined yet, and the environment is empty.
+* The smaller top right pane shows the **Environment** tab, which displays all currently defined objects (like data sets or analysis results) in a the current R session. Figure 1 shows RStudio at the start of a session, so objects are defined yet, and the environment is empty.
 
-* In the bottom right panel, we see the _Files_ tab, which lists the files in the current working directory. This pane works as an internal file browser, where the user can travel through the directory hierarchy on the hard disk and inspect and manipulate files.  
+* In the bottom right panel, we see the **Files** tab, which lists the files in the current working directory. This pane works as an internal file browser, where the user can travel through the directory hierarchy on the hard disk and inspect and manipulate files.  
 
 Note that the two smaller panes are _tabbed_, i.e. other functionality is available in separate tabs (like _History_ on the top and _Packages_ and _Plots_ on the bottom). This will be discussed in detail below.
 
@@ -128,7 +135,7 @@ The functions in the examples so far do their job by returning a numerical or st
 
 `r tufte::newthought("Finding functions")`
 
-The functions in the examples above are all part of base R, and are immediately available at the command prompt after starting R/RStudio. Most other functions however live in specialized add-on packages, which need to be loaded before you can use their functions; see ??? for details.
+The functions in the examples above are all part of base R, and are immediately available at the command prompt after starting R/RStudio. Most other functions however live in specialized add-on packages, which need to be loaded before you can use their functions; see the section on R packages below for details.
 
 Learning how to use functions, and what functions to use in order to get a task done, is the hardest part when starting with R. To help you with this, R and its add-on packages have large amounts of documentation available. In the simplest case, when you remember the name of the function, you can just type 
 ```{r, eval=FALSE}
@@ -138,7 +145,7 @@ at the command line; this will open the corresponding documentation in a separat
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10_Help_ttest.png}\caption{RStudio Help tab}
+\includegraphics[width=\textwidth]{figures/02_RStudio_1_3_1093_Windows10_Help_ttest.png}\caption{RStudio Help tab}
 \end{marginfigure}
 
 If you only kind of remember the name of the function, say something with "test", you can type `r tufte::margin_note("Note: \\texttt{apropos} is again just an R function, which takes a character expression with the string of interest as argument, and returns a series of character expressions, which are the names of the functions that match the string.")`
@@ -191,7 +198,7 @@ During a typical interactive session, you will generate a number of different ob
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10_EnvTab.png}\caption{RStudio Environment tab}
+\includegraphics[width=\textwidth]{figures/03_RStudio_1_3_1093_Windows10_EnvTab_list.png}\caption{RStudio Environment tab}
 \end{marginfigure}
 
 ```{r}
@@ -296,21 +303,28 @@ In short, a data frame is the R implementation of the standard format for analys
 
 Building a data frame from hand at the command prompt is neither usual nor recommended. The most common way to import rectangular data into R for analysis is to read it from an external file. With add-on packages, R can read (and often write) a large number of formats, including data files from Stata or SAS as well as Microsoft Excel formats. Import functions of this type generally take as argument the name of the file to be read, and return as result a data frame with its content.^[Import functions also generally have a large number of optional arguments that allow fine control over how the data is read; see e.g. ?read.table]
 
-In base R, `read.table` can read data from a wide range of delimited text formats^[This is not a great limitation, as text-based data formats are the fall-back option for data exchange, supported by all reasonable data analysis software, as well as Microsoft Excel.] (which includes tab-delimited and CSV).  
+In base R, `read.table` can read data from a wide range of delimited text formats.
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/04_RStudio_1_3_1093_Windows10_EnvTab_import.png}\caption{RStudio Environment with import menu}
+\end{marginfigure}
+The `Environment`-pane offers shortcuts for importing other types of common data files.
+
 
 `r tufte::newthought("Example: qPCR data")`
 
 This document comes with a data set `qPCR.txt`^[link?!] that contains the results of a small qPCR experiment, where the expression of a target gene in treated _Arabidopsis thaliana_ plants was compared to untreated controls plants, at four different concentrations, each with three replicates.^[[PMC1395339](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1395339/)] Consequently, the file contains 24 measurements of the relative expression level of the target gene compared to a reference gene (`DeltaCt`), together with the corresponding treamtent status (`Sample`) and concentration (`Con`); variables names are listed in the first row of the file.
 
-We use `read.table` to import the data file, which we directly save as object `ex1`. The argument `header=TRUE` tells `read.table` to use the first row as column names:
-```{r, eval=1}
-ex1 <- read.table("Z:/OmicsDataAnalysis/Data/qPCR.txt", header = TRUE)
-ex1
+We use `read.table` to import the data file, which we directly save as object `ex1`. The argument `header=TRUE` tells `read.table` to use the first row as column names, and the argument `stringsAsFactors = TRUE` to import the character coumn directly as a factor variable:
+```{r, eval=1, R.options = list(width = 60)}
+ex1 <- read.table("Z:/OmicsDataAnalysis/Data/qPCR.txt", 
+                  header = TRUE, stringsAsFactors = TRUE)
 ```
+
 
 ## Inspecting data
 
-It is highly recommended to perform a basic quality check after each data import. At the command prompt, we can use the function `head` to display the first few rows of the data frame:
+I recommend some basic quality checks after each data import. We can use the function `head` to display the first few rows of the data:
 ```{r}
 head(ex1)
 ```
@@ -320,10 +334,14 @@ More formally, we can use the function `str` to look at the _structure_ of the o
 ```{r}
 str(ex1)
 ```
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/05_RStudio_1_3_1093_Windows10_EnvTab_structure.png}\caption{RStudio Environment tab also showing structure of ex1}
+\end{marginfigure}
 This is quite informative: we learn that this is indeed a data frame with 24 rows and three columns, all of which have the right type and name, and the values appear to be correct, too.^[And the grouping variable Sample was indeed automatically converted to a factor variable by read.table]
 
 Everything used in the small $5\times 2$ toy example above works here, too, including the `$`-notation:
-```{r, R.options = list(width = 80)}
+```{r, R.options = list(width = 60)}
 ex1$Del
 ```
 Note that we only have to type enough of the column name to uniquely identify the variable.^[This is actually quite lazy, as both R and RStudio support tab-expansion for column names.]
@@ -363,14 +381,15 @@ Note that my working directory has a number of sub-folders, which is generally a
 
 After setting the working directory, all further file operations that do not explicity start at the root of the file system will be _relative_ to the working directory. So in order to read the file `qPCR.txt` in sub-folder `Data`, it is sufficient to run^[Another round of tab-expansions: once you have placed the cursor between the quotation marks, you can start to type the file name, and hit tab to show a list of available files in the working directory.]
 ```{r}
-ex1 <- read.table("Data/qPCR.txt", header=TRUE)
+ex1 <- read.table("Data/qPCR.txt", header=TRUE,
+                  stringsAsFactors = TRUE)
 str(ex1)
 ```
 Alternatively, you can use the GUI to set the working directory: both R and RStudio have menu items for that (`File/Change dir` and `Session/Set working dir`, respectively). RStudio also offers the Files pane, where you can explore the directory tree interactively to set a working directory.
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10_FileTab.png}\caption{RStudio Files pane}
+\includegraphics[width=\textwidth]{figures/06_RStudio_1_3_1093_Windows10_FilesTab.png}\caption{RStudio Files pane}
 \end{marginfigure}
 
 
@@ -390,6 +409,9 @@ The function `hist` takes a numerical vector as argument and draws a histogram i
 ```{r, fig.margin = TRUE, fig.cap = 'Histogram of DeltaCt', fig.width=3.5, fig.height=3.5}
 hist(ex1$DeltaCt)
 ```
+
+\newpage
+
 The function `boxplot` can draw boxplots of values of a given variable for separate groups of subjects, given by another variable. This draws separate boxplots for the relative strength of gene expression `DeltaCt` for the two groups of measurements as seen in grouping variable `Sample`:
 ```{r, fig.margin = TRUE, fig.cap = 'Boxplot of DeltaCt by group', fig.width=3.5, fig.height=3.5}
 boxplot(DeltaCt ~ Sample, ex1)
@@ -398,7 +420,7 @@ The first argument in this function call is a _formula_, an R construction that 
 
 With regard to the plot itself, we see that the expression levels are clearly higher among controls than among cases, and that there is a suspiciously large value among the controls - interesting for the report?
 
-Base graphics look a rather old-fashioned, but are straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the range of this document.^[See however ????] 
+Base graphics look a rather old-fashioned, but are straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the scope of this document.
 
 ## Statistical tests
 
@@ -423,14 +445,24 @@ Results to be included in a report can be exported manually: text output can be 
 
 Manual export / copying and pasting is reasonably fast and convenient for a few numbers and plots, but generally not recommended, because it breaks the connection between the R code use to generate the results and the results themselves: this is a common source of errors that hard to track. It also has to be repeated whenever the data or the analysis changes, and formatting even moderately large result tables becomes very time consuming.
 
-Therefore, results should generally be exported as part of an analysis script that automates both analysis and extraction of the desired results, see ???.
+Therefore, results should generally be exported as part of an analysis script that automates both analysis and extraction of the desired results, see R Scripts below.
+
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/07_RStudio_1_3_1093_Windows10_PlotTab_Export.png}\caption{RStudio Files pane}
+\end{marginfigure}
+
 
 ## Shut down R
 
 Terminating an R session is easy: select the `Quit`-entry in the `File`-menu, or kill the program window, or use the command `q()` in the console. 
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/08_RStudio_1_3_1093_Windows10_Quit.png}\caption{R Quit dialogue}
+\end{marginfigure}
 However, by default, all data, results, and plots generated during an R/RStudio session will be lost when quitting R, unless you take steps to save them for later. Therefore, by default, R will always offer to save the _workspace image_ when you quit a session: this means that all currently defined objects will be saved to a file called `.RData` in the current working directory. This file can later be loaded via the `Load workspace`-entry in the `Session`-menu.^[In base R, in the File-menu], or via the `load()` command in the console.^[If the current working directory is also the start-up directory for R/RStudio, this .RData file will be loaded automatically at the start of the next session, with a message in the console.]
 
-Note that you can save the current workspace image at any time via the `Environment`-tab or the `save.image()`-command.^[Image: Environment pane]
+Note that you can save the current workspace image at any time via the `Environment`-tab or the `save.image()`-command.
 
 In addition, RStudio will also save all the R commands used in the current R session (as seen in the `History`-pane) to a file `.Rhistory` in the current working directory.^[By default, RStudio will always save the history, but base R only when also saving the workspace image.] This is a simple text file that can be opened in any text editor, or re-loaded into R via `History`-pane or the `loadhistory()`-command. 
 
@@ -444,9 +476,21 @@ R supports a mechanism through which user-written software can be distributed an
 
 Packages are mostly available through curated online collections, i.e. _repositories_:
 
-1. The most important and default repository is CRAN, the Comprehensive R Archive Network^[[cran.r-project.org/web/packages](https://cran.r-project.org/web/packages/)], with currently more than 16,000 packages covering an extremely wide range of applications. 
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/10_CRAN_4_0_3.png}\caption{CRAN \url{https://cran.r-project.org/}}
+\end{marginfigure}
 
-2. Bioconductor^[[www.bioconductor.org/packages](https://www.bioconductor.org/packages)] is another large (currently ca. 2000 packages) collection, focused on high-throughput genomic data.
+1. The most important and default repository is CRAN, the Comprehensive R Archive Network, with currently more than 16,000 packages covering an extremely wide range of applications. 
+
+2. Bioconductor is another large (currently ca. 2000 packages) collection, focused on high-throughput genomic data.
+
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/11_Bioconductor_3_12.png}\caption{Bioconductor \url{https://www.bioconductor.org/}}
+\end{marginfigure}
+
+
 
 The curation process for these repositories ensures minimal standards of software quality and documentation. Other sources which also host many R packages for download, like github, lack these standards, leading to more variable package quality. 
 
@@ -471,6 +515,16 @@ In order to make use of the commands and data sets in an R package, two steps ar
     Note that loading is required _once per session_, namely the first time before you use one of the package commands or data sets; after the package has been loaded as above, it syats activated until the end of the R session. 
 
 Installation and loading of packages can also be done via the `Packages`-pane in RStudio: this tab lists all installed packages currently installed, which can simply be loaded via checking their selection box. Extra packages can be installed via the `Install`-dialogue in this pane.  
+
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/09_RStudio_1_3_1093_Windows10_PackagesTab.png}\caption{RStudio Package pane}
+\end{marginfigure}
+
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/12_RStudio_1_3_1093_Windows10_PackagesTab_Install.png}\caption{RStudio Package pane with Install dialogue}
+\end{marginfigure}
 
 
 ## Example packages
@@ -518,9 +572,20 @@ Scripts have a number of other important practical advantages: a script can be
 
 ## Building a script
 
+\begin{marginfigure}
+\centering 
+\includegraphics[width=\textwidth]{figures/13_RStudio_1_3_1093_Windows10_HistoryTab.png}\caption{RStudio History pane showing the workflow example}
+\end{marginfigure}
+
 It is easiest to start with an interactive analysis, e.g. by running a workflow as described in the previous section.
 
-All commands used in an interactive session are shown in the **History** tab. From there, some or all of the commands can be selected and copied to a text file via the `To Source`-button. This text file is then opened in the **Editor**-pane of RStudio, which is an integrated multi-tabbed text editor with special support for editing and running R script files:
+All commands used in an interactive session are shown in the **History** tab. From there, some or all of the commands can be selected and copied to a text file via the `To Source`-button. 
+\begin{figure*}
+\centering 
+\includegraphics[width=\textwidth]{figures/14_RStudio_1_3_1093_Windows10_wSourcePane.png}\caption{RStudio with open Source pane showing script script1.R\label{fig:Source}}
+\end{figure*}
+
+This text file is then opened in the **Source**-pane of RStudio, which is an integrated multi-tabbed text editor with special support for editing and running R script files, as seen in Figure \ref{fig:Source}:
 
 * tab-expansion for R functions, function arguments and file names works,
 * some or all of the commands can be selected and run at the console, either via the `Run`-Button at the top of the editor pane, or by pressing `Ctrl-Return`at the same time.
@@ -535,7 +600,7 @@ Note that the person that will read, edit etc. the script and needs to understan
 
 Comments are easy to add: R/RStudio will ignore any text after a hastag `#` until the end of the current line.
 
-Personally, I always include the filename, a short description, my email address and the original date of writing in any R script I save; I also add comments to separate major steps in the workflow, like setup, data import, data cleaning etc. and explain anything unusual or smart I have done in the code (see the ???? script files included with this document / appendix)
+Personally, I always include the filename, a short description, my email address and the original date of writing in any R script I save; I also add comments to separate major steps in the workflow, like setup, data import, data cleaning etc. and explain anything unusual or smart I have done in the code (see e.g. the script files included with this document).
 
 ## Running  a script
 
@@ -550,9 +615,15 @@ In you have opened an R script in the editor pane, you can translate it into a d
 * combine all the comments, code and results in one document,
 * convert that document to the chosen format. 
 
-This draft output can be edited to generate a full report on the data analysis.
+This draft output can then be edited to generate a full report on the data analysis:
 
-`r tufte::margin_note("see literate programming, R markdown, knitr for more!")`
+\begin{figure}
+\centering 
+\includegraphics[width=\textwidth]{figures/16_Compiled_Script1_Word.png}\caption{Compiled Script1.R as Word file}
+\end{figure}
+
+This technique can be greatly expanded to generate e.g. automated reports from data, see e.g. package `knitr`. 
+
 
 # Other Resources
 
