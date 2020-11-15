@@ -34,14 +34,24 @@ R is a free software environment for statistical computing and graphics^[[www.r-
 
 3. the infrastructure for a large number of add-on packages that implement methods in statistics, data processing, bioinformatics, machine learning and many other disciplines.^[[cran.r-project.org/web/packages](https://cran.r-project.org/web/packages/)] ^[[www.bioconductor.org/packages](https://www.bioconductor.org/packages)] 
 
-RStudio is an integrated development environment built on top of R. It provides a graphical user interface around the R console, including a code editor, a file browser, a help viewer, a tab for local data management and other utilities. In principle, all of this functionality is also available in R via commands and add-on packages, but the clean structure and tight integration of RStudio makes the learning process easier for many beginners. RStudio has an additional focus on data science and related software development, some aspects of which can be useful for data analysis (e.g. version control integration via git), whereas others are more developer-oriented (e.g. javascript-intergration via shiny).
+RStudio is an integrated development environment built on top of R. It provides a graphical user interface around the R console, including a code editor, a file browser, a help viewer, a tab for local data management and other utilities. In principle, all of this functionality is also available in R via commands and add-on packages, but the clean structure and tight integration of RStudio makes the learning process easier for many beginners. RStudio has an additional focus on data science and related software development, some aspects of which can be useful for data analysis (e.g. version control integration via git), whereas others are more developer-oriented (e.g. javascript-integration via shiny).
 
 Both R and RStudio are open source software, and freely available online^[Installers can be run with defaults.], but where R is community-developed and non-profit^[[www.r-project.org/foundation/](https://www.r-project.org/foundation/)], RStudio is the product of a commercial entity^[[linkedin.com/company/rstudio-inc](https://www.linkedin.com/company/rstudio-inc)].
 
+The RStudio program window is typically split into up to four different quadrants or _panes_. Figure 1 shows a typical configuration: 
+
 \begin{figure*}
 \centering 
-\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10.png}\caption{The RStudio window showing three different panels: the large panel to the left is the console, identical in look and function to the R console above. The top right panel shows the current R environment, which is still empty after start-up (no objects defined). The bottom right panel shows the files in the current working directory.}
+\includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10.png}\caption{RStudio running R 4.0.3}
 \end{figure*}
+
+* The large pane to the left showing the R start-up message is the _console_. This is the main window, where the user types commands, and numerical results are displayed. The RStudio console is identical in function and appearance to the console window in the underlying R software. 
+
+* The smaller top right pane shows the _Environment_ tab, which displays all currently defined objects (like data sets or analysis results) in a the current R session. Figure 1 shows RStudio at the start of a session, so objects are defined yet, and the environment is empty.
+
+* In the bottom right panel, we see the _Files_ tab, which lists the files in the current working directory. This pane works as an internal file browser, where the user can travel through the directory hierarchy on the hard disk and inspect and manipulate files.  
+
+Note that the two smaller panes are _tabbed_, i.e. other functionality is available in separate tabs (like _History_ on the top and _Packages_ and _Plots_ on the bottom). This will be discussed in detail below.
 
 \newpage
 
@@ -426,7 +436,72 @@ In addition, RStudio will also save all the R commands used in the current R ses
 
 \newpage
 
-# Bulding a simple script
+# Adding functionality with R packages
+
+## Background
+
+R supports a mechanism through which user-written software can be distributed and used in (almost) the same manner as the commands built into R: _R packages_. These packages are written using R commands, similar to the R scripts discussed below, but may also include code from other programming languages like e.g. C++. While R is a powerful statistical package in its own right, it is the huge collection of R packages that contribute the majority of methods available through R. 
+
+Packages are mostly available through curated online collections, i.e. _repositories_:
+
+1. The most important and default repository is CRAN, the Comprehensive R Archive Network^[[cran.r-project.org/web/packages](https://cran.r-project.org/web/packages/)], with currently more than 16,000 packages covering an extremely wide range of applications. 
+
+2. Bioconductor^[[www.bioconductor.org/packages](https://www.bioconductor.org/packages)] is another large (currently ca. 2000 packages) collection, focused on high-throughput genomic data.
+
+The curation process for these repositories ensures minimal standards of software quality and documentation. Other sources which also host many R packages for download, like github, lack these standards, leading to more variable package quality. 
+
+## Installation vs Loading
+
+In order to make use of the commands and data sets in an R package, two steps are necessary:
+
+1. The package needs to be _installed_: this means that there has to be a local copy of the data and software on a file path known to R. Packages available on CRAN can be downloaded via the command `install.packages`, e.g. as in 
+
+    ```{r, eval = FALSE}
+    install.packages("ggplot2")
+    ```
+    
+    Note that installation is only required _once_: after the package has been installed, the local copy remains on the local hard disk for all future R sessions.  
+    
+2. The package needs to be _loaded_: this tells R to activate the installed copy of the package and make its built-in commands and data sets available at the console. This is done via the command `library`, as in 
+
+    ```{r, eval = FALSE}
+    library(ggplot2)
+    ```
+    
+    Note that loading is required _once per session_, namely the first time before you use one of the package commands or data sets; after the package has been loaded as above, it syats activated until the end of the R session. 
+
+Installation and loading of packages can also be done via the `Packages`-pane in RStudio: this tab lists all installed packages currently installed, which can simply be loaded via checking their selection box. Extra packages can be installed via the `Install`-dialogue in this pane.  
+
+
+## Example packages
+
+Widely used packages include e.g.:
+* `ggplot2`, a complete and modern plotting system 
+* `dplyr`, offering consistent data manipulation (SQL-style)
+* `data.table`, which implements a high-performance alternative to data frames for large data sets.
+
+Popular packages that provide useful tools for bioinformatics-type data and are available from CRAN:
+*  `matrixStats`: statistics for rows/columns of a data matrix
+* `factoextra`: data reduction methods (e.g. principal components) and visualizations
+
+Other popular packages for bioinformatics-type data, available from Bioconductor:
+* `limma` allows fitting of linear models for many features in parallel
+* `biomaRt` interfaces to online repositories for feature annotation
+
+Note that these packages have a different installation process, demonstrated on the package homepages. 
+
+## Finding more useful packages
+
+As it is often difficult identify just the right package required for a task simply through search engines, both CRAN and Bioconductor offer curated lists of packages that can be used for specific application areas:
+
+* For CRAN, these are _task views_^[[cran.r-project.org/web/views/](https://cran.r-project.org/web/views/)]: e.g. for genetic applications^[[cran.r-project.org/web/views/Genetics.html](https://cran.r-project.org/web/views/Genetics.html)]
+
+* For BioConductor, these are _BioCViews_^[[www.bioconductor.org/packages/release/BiocViews.html#___Workflow](https://www.bioconductor.org/packages/release/BiocViews.html#___Workflow)], which organize packages hierarchically by application, domain, method etc., e.g. packages useful within metagenomics^[[www.bioconductor.org/packages/release/BiocViews.html#___Metagenomics](https://www.bioconductor.org/packages/release/BiocViews.html#___Metagenomics)]   
+
+
+\newpage
+
+# Building a simple script
 
 R/RStudio make it very easy to translate an interactive data analysis into an _analysis script_: this is simply a text file containing a series of R commands that act together to achieve some goal, e.g. clean a data set, fit a regression model, create a plot etc. 
 
@@ -479,52 +554,11 @@ This draft output can be edited to generate a full report on the data analysis.
 
 `r tufte::margin_note("see literate programming, R markdown, knitr for more!")`
 
-\newpage
+# Other Resources
 
-# Going forward
-
-## Finding useful packages
-
-1. Generic: CRAN \url{https://cran.r-project.org/}
-
-    * Comprehensive R Archive Network
-    * 10,000+ packages
-    * Installation via **Packages** tab, `install.packages`
-    * Curated collections: Task views
-
-2. Bioconductor: \url{https://www.bioconductor.org/}
-
-    * Collection of R packages for bioinf / omics
-    * 1,500+ packages
-    * Installation via 	`BiocManager::install`
-    * Collections: BiocViews 
-
-## How to use a BioC package
-
-Example: annotate the protein data 
-
-See script `omicsExample2b.R`
-
-## There is more!
-
-Alternative packages
-
-* `ggplot2`: complete modern plotting system
-* `dplyr`: powerful data manipulation 
-* `data.table`: alternative to data frame for large data sets
-* `rmarkdown`: advanced mixing of code / results
-* `limma`: linear models for many features
-* `biomaRt`: interfaces to online repositories
-* \ldots
-
-\appendix
-
-# Resources
-
-* CRAN contributed documentation \\
-\url{https://cran.r-project.org/other-docs.html}
-* BioC common workflows \\ \url{http://bioconductor.org/packages/release/workflows/} 
-* BioC contributed documentation \\ \url{http://bioconductor.org/help/community/}
-* BioC course material \\ \url{http://bioconductor.org/help/course-materials/}
-* BioC featured publications \\ \url{http://bioconductor.org/help/publications/index.html}
-
+* CRAN user contributed documentation of varying length^[[cran.r-project.org/other-docs.html](https://cran.r-project.org/other-docs.html)]
+* RStudio cheatsheets: 1-page summaries on how to use RStudio, specific packages, or perform specific packages^[[rstudio.com/resources/cheatsheets/](https://rstudio.com/resources/cheatsheets/)]
+* Bioconductor common workflows show how Bioconductor packages can work together^[[bioconductor.org/packages/release/workflows/](http://bioconductor.org/packages/release/workflows/)]
+* Bioconducor user-contributed documentation^[[http://bioconductor.org/help/community/](http://bioconductor.org/help/community/)]
+* Bioconductor course material^[[bioconductor.org/help/course-materials/](http://bioconductor.org/help/course-materials/)]
+* Bioconductor featured publications^[[bioconductor.org/help/publications/index.html](http://bioconductor.org/help/publications/index.html)]
