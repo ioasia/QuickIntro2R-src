@@ -1,22 +1,28 @@
 ---
 title: "Introduction to R/RStudio"
 author: "Alexander Ploner"
-date: "2020-11-19"
-output: 
+date: '2020-11-19'
+output:
   tint::tintPdf:
     highlight: tango
-classoption: a4paper  
+classoption: a4paper
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, prompt = TRUE, comment = NA, collapse = TRUE)
-#knitr::opts_knit$set(root.dir = "Z:/@ownCloudKI/OmicsDataAnalysis/")
-knitr::opts_knit$set(root.dir = "~/@ownCloudKI/OmicsDataAnalysis/")
+knitr::opts_knit$set(root.dir = "Z:/@ownCloudKI/OmicsDataAnalysis/")
+#knitr::opts_knit$set(root.dir = "~/@ownCloudKI/OmicsDataAnalysis/")
 ```
 
 # This document
 
 This is a short introduction to working with R/RStudio, covering the basics of working with the commandline, data types and data structures, and organising a simple analysis workflow. No previous exposure to R or RStudio is assumed. I strongly recommend that as a first-time reader, you work through the examples shown in the text at a computer. 
+
+The latest version of this document, as well as the accompanying data files and example scripts, is available from Github.^[[github.com/alexploner/QuickIntro2R](https://github.com/alexploner/QuickIntro2R)]
+
+This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.^[[creativecommons.org/licenses/by-nc-sa/4.0/](https://creativecommons.org/licenses/by-nc-sa/4.0/)]
+
+
 
 # Background
 
@@ -28,20 +34,14 @@ R is a free software environment for statistical computing and graphics^[[www.r-
 
 3. the infrastructure for a large number of add-on packages that implement methods in statistics, data processing, bioinformatics, machine learning and many other disciplines.^[[cran.r-project.org/web/packages](https://cran.r-project.org/web/packages/)] ^[[www.bioconductor.org/packages](https://www.bioconductor.org/packages)] 
 
-\begin{figure}
-\centering 
-\includegraphics[width=\textwidth]{figures/Rgui_3_6_1_Windows10.png}\caption{The main R window, showing the console with the start-up message and the command prompt.}
-\end{figure}
-
-
-RStudio is an integrated development environment built on top of R. It provides a graphical user interface around the R console, including a code editor, a file browser, a help viewer, a tab for local data management and other utilities. In principle, all of this functionality is also available in R via commands and add-on packages, but the clean structure and tight integration of RStudio makes the learning process easier for most beginners. RStudio has an additional focus on data science and related software development, some aspects of which can be generally useful for data analysis (e.g. version control integration via git, svn), whereas others are more developer-oriented (e.g. javascript-intergration via shiny).
+RStudio is an integrated development environment built on top of R. It provides a graphical user interface around the R console, including a code editor, a file browser, a help viewer, a tab for local data management and other utilities. In principle, all of this functionality is also available in R via commands and add-on packages, but the clean structure and tight integration of RStudio makes the learning process easier for many beginners. RStudio has an additional focus on data science and related software development, some aspects of which can be useful for data analysis (e.g. version control integration via git), whereas others are more developer-oriented (e.g. javascript-intergration via shiny).
 
 Both R and RStudio are open source software, and freely available online^[Installers can be run with defaults.], but where R is community-developed and non-profit^[[www.r-project.org/foundation/](https://www.r-project.org/foundation/)], RStudio is the product of a commercial entity^[[linkedin.com/company/rstudio-inc](https://www.linkedin.com/company/rstudio-inc)].
 
-\begin{figure}
+\begin{figure*}
 \centering 
 \includegraphics[width=\textwidth]{figures/RStudio_1_2_5001_Windows10.png}\caption{The RStudio window showing three different panels: the large panel to the left is the console, identical in look and function to the R console above. The top right panel shows the current R environment, which is still empty after start-up (no objects defined). The bottom right panel shows the files in the current working directory.}
-\end{figure}
+\end{figure*}
 
 \newpage
 
@@ -82,7 +82,7 @@ TRUE
 
 ## Functions
 
-Everything interesting in R is done via _functions_. These are small, pre-packaged pieces of code that can perform a specific task. Functions have names (generally), and zero, one or more _arguments_, i.e. slots for pieces of information that the function either operates upon (data), or that tell the function what to do (flags, parameters). 
+Everything interesting in R is done via _functions_. These are pre-packaged pieces of code that can perform a specific task. Functions have names (generally), and zero, one or more _arguments_, i.e. slots for pieces of information that the function either operates upon (data), or that tell the function what to do (flags, parameters). 
 
 In order to run (execute) a function, you type its name at the console, followed by a pair of parentheses with the arguments for what you want the function to do, separated by commas.
 
@@ -135,7 +135,7 @@ If you only kind of remember the name of the function, say something with "test"
 ```{r, eval=FALSE}
 apropos("test")
 ```
-to list all currently aviable functions with "test" in their name. 
+to list all currently available functions with "test" in their name. 
 
 A very useful feature is also _tab-expansion_: when typing the function name in RStudio, hitting the tabulator-key will open a context menu at the cursor that lists all available function names that complete the already typed text; this list is scrollable, reactive (i.e. more typing narrows the list), and displays the help text for each entry in a second-level pop-up.  `r tufte::margin_note("Both function- and argument expansion also work in plain R, though you may have to hit the tab-key twice, and only the names (and not the help) are displayed.")` Furthermore, once you have typed or selected the function name with the trailing parentheses, you can move the cursor between these parentheses and hit the tabulator-key again to get a scrollable, reactive list of the function arguments (with documentation).
 
@@ -293,9 +293,8 @@ In base R, `read.table` can read data from a wide range of delimited text format
 This document comes with a data set `qPCR.txt`^[link?!] that contains the results of a small qPCR experiment, where the expression of a target gene in treated _Arabidopsis thaliana_ plants was compared to untreated controls plants, at four different concentrations, each with three replicates.^[[PMC1395339](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1395339/)] Consequently, the file contains 24 measurements of the relative expression level of the target gene compared to a reference gene (`DeltaCt`), together with the corresponding treamtent status (`Sample`) and concentration (`Con`); variables names are listed in the first row of the file.
 
 We use `read.table` to import the data file, which we directly save as object `ex1`. The argument `header=TRUE` tells `read.table` to use the first row as column names:
-```{r, eval=2}
+```{r, eval=1}
 ex1 <- read.table("Z:/OmicsDataAnalysis/Data/qPCR.txt", header = TRUE)
-ex1 <- read.table("~/@ownCloudKI/OmicsDataAnalysis/Data/qPCR.txt", header = TRUE)
 ex1
 ```
 
@@ -346,9 +345,8 @@ I suggest breaking down the workflow as follows:
 As demonstrated above, you can specify the full path to any file on the harddisk for reading it in via `read.table`. However, I recommend setting R's default directory, the _working directory_, right at the start of the analysis. This makes it easier to keep track of files that you generate while working on this specific data.
 
 The working directory can be set at the command prompt:
-```{r, eval = c(2,3)}
+```{r, eval = 1:2}
 setwd("Z:/OmicsDataAnalysis/")
-setwd("~/@ownCloudKI/OmicsDataAnalysis/")
 dir()
 ```
 Note that my working directory has a number of sub-folders, which is generally a good idea if your project involves more than a handful of files.
