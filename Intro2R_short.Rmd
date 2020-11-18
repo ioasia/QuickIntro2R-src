@@ -530,15 +530,18 @@ Installation and loading of packages can also be done via the `Packages`-pane in
 ## Example packages
 
 Widely used packages include e.g.:
+
 * `ggplot2`, a complete and modern plotting system 
 * `dplyr`, offering consistent data manipulation (SQL-style)
 * `data.table`, which implements a high-performance alternative to data frames for large data sets.
 
 Popular packages that provide useful tools for bioinformatics-type data and are available from CRAN:
+
 *  `matrixStats`: statistics for rows/columns of a data matrix
 * `factoextra`: data reduction methods (e.g. principal components) and visualizations
 
 Other popular packages for bioinformatics-type data, available from Bioconductor:
+
 * `limma` allows fitting of linear models for many features in parallel
 * `biomaRt` interfaces to online repositories for feature annotation
 
