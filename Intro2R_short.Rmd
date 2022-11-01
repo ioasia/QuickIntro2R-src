@@ -36,7 +36,7 @@ R is a free software environment for statistical computing and graphics.
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/00_Rproject_4_0_3.png}\caption{R homepage \url{https://www.r-project.org/}}
+\includegraphics[width=\textwidth]{figures/00_Rproject_web.png}\caption{R homepage \url{https://www.r-project.org/}}
 \end{marginfigure}
 
 Specifically, R is 
@@ -55,7 +55,7 @@ The RStudio program window is typically split into up to four different quadrant
 
 \begin{figure*}
 \centering 
-\includegraphics[width=\textwidth]{figures/01_RStudio_1_3_1093_Windows10.png}\caption{RStudio running R 4.0.3}
+\includegraphics[width=\textwidth]{figures/01_RStudio_3pane_fresh.png}\caption{RStudio running R 4.2.2}
 \end{figure*}
 
 * The large pane to the left showing the R start-up message is the **console**. This is the main window, where the user types commands, and numerical results are displayed. The RStudio console is identical in function and appearance to the console window in the underlying R software. 
@@ -153,7 +153,7 @@ at the command line; this will open the corresponding documentation in a separat
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/02_RStudio_1_3_1093_Windows10_Help_ttest.png}\caption{RStudio Help tab}
+\includegraphics[width=\textwidth]{figures/02_RStudio_Help_ttest.png}\caption{RStudio Help tab}
 \end{marginfigure}
 
 If you only kind of remember the name of the function, e.g. something with "test", you can type `r tufte::margin_note("Note: \\texttt{apropos} is again just an R function, which takes a character expression with the string of interest as argument, and returns a series of character expressions, which are the names of the functions that match the string.")`
@@ -208,7 +208,7 @@ During a typical interactive session, you will generate a number of different ob
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/03_RStudio_1_3_1093_Windows10_EnvTab_list.png}\caption{RStudio Environment tab}
+\includegraphics[width=\textwidth]{figures/03_RStudio_EnvTab_list.png}\caption{RStudio Environment tab}
 \end{marginfigure}
 
 ```{r}
@@ -316,7 +316,7 @@ Building a data frame from hand at the command prompt is neither usual nor recom
 In base R, `read.table` can read data from a wide range of delimited text formats.
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/04_RStudio_1_3_1093_Windows10_EnvTab_import.png}\caption{RStudio Environment with import menu}
+\includegraphics[width=\textwidth]{figures/04_RStudio_EnvTab_import.png}\caption{RStudio Environment with import menu}
 \end{marginfigure}
 The `Environment`-pane offers shortcuts for importing other types of common data files.
 
@@ -346,7 +346,7 @@ str(ex1)
 ```
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/05_RStudio_1_3_1093_Windows10_EnvTab_structure.png}\caption{RStudio Environment tab also showing the structure of ex1}
+\includegraphics[width=\textwidth]{figures/05_RStudio_EnvTab_structure.png}\caption{RStudio Environment tab also showing the structure of ex1}
 \end{marginfigure}
 This is quite informative: we learn that this is indeed a data frame with 24 rows and three columns, all of which have the right type and name, and the values appear to be correct, too.^[And the grouping variable Sample was indeed automatically converted to a factor variable by read.table]
 
@@ -399,7 +399,7 @@ Alternatively, you can use the GUI to set the working directory: both R and RStu
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/06_RStudio_1_3_1093_Windows10_FilesTab.png}\caption{RStudio Files pane}
+\includegraphics[width=\textwidth]{figures/06_RStudio_FilesTab.png}\caption{RStudio Files pane}
 \end{marginfigure}
 
 
@@ -487,7 +487,7 @@ Therefore, results should generally be exported as part of an analysis script th
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/07_RStudio_1_3_1093_Windows10_PlotTab_Export.png}\caption{RStudio Files pane}
+\includegraphics[width=\textwidth]{figures/07_RStudio_PlotTab_Export.png}\caption{RStudio Files pane}
 \end{marginfigure}
 
 
@@ -496,7 +496,7 @@ Therefore, results should generally be exported as part of an analysis script th
 Terminating an R session is easy: select the `Quit`-entry in the `File`-menu, or kill the program window, or use the command `q()` in the console. 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/08_RStudio_1_3_1093_Windows10_Quit.png}\caption{R Quit dialogue}
+\includegraphics[width=\textwidth]{figures/08_RStudio_Quit.png}\caption{R Quit dialogue}
 \end{marginfigure}
 However, by default, all data, results, and plots generated during an R/RStudio session will be lost when quitting R, unless you take steps to save them for later. Therefore, by default, R will always offer to save the _workspace image_ when you quit a session: this means that all currently defined objects will be saved to a file called `.RData` in the current working directory. This file can later be loaded via the `Load workspace`-entry in the `Session`-menu.^[In base R, in the File-menu], or via the `load()` command in the console.^[If the current working directory is also the start-up directory for R/RStudio, this .RData file will be loaded automatically at the start of the next session, with a message in the console.]
 
@@ -516,8 +516,8 @@ Packages are mostly available through curated online collections, i.e. _reposito
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/10_CRAN_4_0_3.png}\caption{CRAN \url{https://cran.r-project.org/}}
-\end{marginfigure}
+\includegraphics[width=\textwidth]{figures/10_CRAN_web.png}\caption{CRAN \url{https://cran.r-project.org/}}
+\end{marginfigure}    
 
 1. The most important and default repository is CRAN, the Comprehensive R Archive Network, with currently more than 18,000 packages covering an extremely wide range of applications. 
 
@@ -525,7 +525,7 @@ Packages are mostly available through curated online collections, i.e. _reposito
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/11_Bioconductor_3_12.png}\caption{Bioconductor \url{https://www.bioconductor.org/}}
+\includegraphics[width=\textwidth]{figures/11_Bioconductor_web.png}\caption{Bioconductor \url{https://www.bioconductor.org/}}
 \end{marginfigure}
 
 
@@ -556,12 +556,12 @@ Installation and loading of packages can also be done via the `Packages`-pane in
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/09_RStudio_1_3_1093_Windows10_PackagesTab.png}\caption{RStudio Package pane}
+\includegraphics[width=\textwidth]{figures/09_RStudio_PackagesTab.png}\caption{RStudio Package pane}
 \end{marginfigure}
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/12_RStudio_1_3_1093_Windows10_PackagesTab_Install.png}\caption{RStudio Package pane with Install dialogue}
+\includegraphics[width=\textwidth]{figures/12_RStudio_PackagesTab_Install.png}\caption{RStudio Package pane with Install dialogue}
 \end{marginfigure}
 
 
@@ -614,7 +614,7 @@ Scripts have a number of other important practical advantages: a script can be
 
 \begin{marginfigure}
 \centering 
-\includegraphics[width=\textwidth]{figures/13_RStudio_1_3_1093_Windows10_HistoryTab.png}\caption{RStudio History pane showing the workflow example}
+\includegraphics[width=\textwidth]{figures/13_RStudio_HistoryTab.png}\caption{RStudio History pane showing the workflow example}
 \end{marginfigure}
 
 It is easiest to start with an interactive analysis, e.g. by running a workflow as described in the previous section.
@@ -622,7 +622,7 @@ It is easiest to start with an interactive analysis, e.g. by running a workflow 
 All commands used in an interactive session are shown in the **History** tab. From there, some or all of the commands can be selected and copied to a text file via the `To Source`-button. 
 \begin{figure*}
 \centering 
-\includegraphics[width=\textwidth]{figures/14_RStudio_1_3_1093_Windows10_wSourcePane.png}\caption{RStudio with open Source pane showing script script1.R\label{fig:Source}}
+\includegraphics[width=\textwidth]{figures/14_RStudio_wSourcePane.png}\caption{RStudio with open Source pane showing script script1.R\label{fig:Source}}
 \end{figure*}
 
 This text file is then opened in the **Source**-pane of RStudio, which is an integrated multi-tabbed text editor with special support for editing and running R script files, as seen in Figure \ref{fig:Source}:
