@@ -1,7 +1,7 @@
 ---
 title: "Introduction to R/RStudio"
 author: "Alexander Ploner"
-date: '2021-11-23'
+date: '2022-11-22'
 output:
   tint::tintPdf:
     highlight: tango
@@ -204,7 +204,7 @@ a
 
 `r tufte::newthought("Managing objects")`
 
-During a typical interactive session, you will generate a number of different objects, containing different types of data and results. In order to get an overview of what objects are currently defined (and therefore available for analysis and inspection), you can either check the Environment tab in RStudio, which shows a list of the currently defined objecsts, or run a command at the prompt:
+During a typical interactive session, you will generate a number of different objects, containing different types of data and results. In order to get an overview of what objects are currently defined (and therefore available for analysis and inspection), you can either check the Environment tab in RStudio, which shows a list of the currently defined objects, or run a command at the prompt:
 
 \begin{marginfigure}
 \centering 
