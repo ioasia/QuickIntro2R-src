@@ -49,7 +49,7 @@ Specifically, R is
 
 RStudio is an integrated development environment built on top of R. It provides a graphical user interface around the R console, including a code editor, a file browser, a help viewer, a tab for local data management and other utilities. In principle, all of this functionality is also available in R via commands and add-on packages, but the clean structure and tight integration of RStudio makes the learning process easier for many beginners. RStudio has an additional focus on data science and related software development, some aspects of which can be useful for data analysis (e.g. version control integration via git), whereas others are more developer-oriented (e.g. javascript-integration via shiny).
 
-Both R and RStudio are open source software, and freely available online^[Installers can be run with defaults.], but where R is community-developed and non-profit^[[www.r-project.org/foundation/](https://www.r-project.org/foundation/)], RStudio is the product of a commercial entity^[[https://www.rstudio.com/about/](https://www.rstudio.com/about/)].
+Both R and RStudio are open source software, and freely available online^[Installers can be run with defaults.], but where R is community-developed and non-profit^[[www.r-project.org/foundation/](https://www.r-project.org/foundation/)], RStudio is the product of a commercial entity^[[https://posit.co/about/](https://posit.co/about/)].
 
 The RStudio program window is typically split into up to four different quadrants or _panes_. Figure 1 shows a typical configuration with three panes: 
 
@@ -588,7 +588,7 @@ Note that Bioconductor packages have a different installation process, demonstra
 
 As it is often difficult identify just the right package required for a task simply through search engines, both CRAN and Bioconductor offer curated lists of packages that can be used for specific application areas:
 
-* For CRAN, these are _task views_^[[cran.r-project.org/web/views/](https://cran.r-project.org/web/views/)]: e.g. for genetic applications^[[cran.r-project.org/web/views/Genetics.html](https://cran.r-project.org/web/views/Genetics.html)]
+* For CRAN, these are _task views_^[[cran.r-project.org/web/views/](https://cran.r-project.org/web/views/)]
 
 * For BioConductor, these are _BioCViews_^[[www.bioconductor.org/packages/release/ BiocViews.html#___Workflow](https://www.bioconductor.org/packages/release/BiocViews.html#___Workflow)], which organize packages hierarchically by application, domain, method etc., e.g. packages useful within metagenomics^[[www.bioconductor.org/packages/release/ BiocViews.html#___Metagenomics](https://www.bioconductor.org/packages/release/BiocViews.html#___Metagenomics)]   
 
@@ -668,7 +668,7 @@ This technique can be greatly expanded to generate e.g. nicely formatted reports
 # Other Resources
 
 * CRAN user contributed documentation of varying length^[[cran.r-project.org/other-docs.html](https://cran.r-project.org/other-docs.html)]
-* RStudio cheatsheets: 1-page summaries on how to use RStudio, specific packages, or perform specific packages^[[rstudio.com/resources/cheatsheets/](https://rstudio.com/resources/cheatsheets/)]
+* RStudio cheatsheets: 1-page summaries on how to use RStudio, specific packages, or perform specific packages^[[https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)]
 * Bioconductor common workflows show how Bioconductor packages can work together^[[bioconductor.org/packages/release/workflows/](http://bioconductor.org/packages/release/workflows/)]
 * Bioconducor user-contributed documentation^[[http://bioconductor.org/help/community/](http://bioconductor.org/help/community/)]
 * Bioconductor course material^[[bioconductor.org/help/course-materials/](http://bioconductor.org/help/course-materials/)]
