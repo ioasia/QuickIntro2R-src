@@ -14,10 +14,30 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, prompt = TRUE, comment = NA, collapse = TRUE)
-## Note that we selectively pretend that our home directory is really z:/OmicsDataAnalysis
-## This needs care whne runnnig from other places
-knitr::opts_knit$set(root.dir = "Z:/@ownCloudKI/OmicsDataAnalysis/")
-#knitr::opts_knit$set(root.dir = "~/@ownCloudKI/OmicsDataAnalysis/")
+## Note that we selectively pretend that our data/work directory is something 
+## generic and reasonable sounding, but it can be something different
+## 
+## This needs some care when knitting things
+## 
+## Set your directories here: .showDir is what is displayed, .trueDir is the 
+## place where we actually store the data
+.showDir <- "Z:/OmicsDataAnalysis/"
+.trueDir <- "/home/work_monkey/@OneDriveKI/OmicsDataAnalysis/Handout/proj"
+## Set this for knitr
+knitr::opts_knit$set(root.dir = .trueDir)
+## We manage this via output hooks that 
+## As seen in https://bookdown.org/yihui/rmarkdown-cookbook/output-hooks.html
+local({
+	substitute_dir <- function(x)
+	{
+		gsub(.trueDir, .showDir, x, fixed = TRUE)
+	}
+  hook_old <- knitr::knit_hooks$get("output")  # save the old hook
+  knitr::knit_hooks$set(output = function(x, options) {
+    hook_old(substitute_dir(x), options)
+  })
+  ## NOTE: for source, we replace the actual string .trueDir with the content of .showDir
+})
 ```
 
 # This document
@@ -27,7 +47,6 @@ This is a short introduction to working with R/RStudio, covering the basics of w
 The latest version of this document, as well as the accompanying data files and example scripts, are available from Github.^[[github.com/alexploner/QuickIntro2R](https://github.com/alexploner/QuickIntro2R)]
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.^[[creativecommons.org/licenses/by-nc-sa/4.0/](https://creativecommons.org/licenses/by-nc-sa/4.0/)]
-
 
 
 # Background
@@ -52,7 +71,6 @@ RStudio is an integrated development environment built on top of R. It provides 
 Both R and RStudio are open source software, and freely available online^[Installers can be run with defaults.], but where R is community-developed and non-profit^[[www.r-project.org/foundation/](https://www.r-project.org/foundation/)], RStudio is the product of a commercial entity^[[https://posit.co/about/](https://posit.co/about/)].
 
 The RStudio program window is typically split into up to four different quadrants or _panes_. Figure 1 shows a typical configuration with three panes: 
-
 \begin{figure*}
 \centering 
 \includegraphics[width=\textwidth]{figures/01_RStudio_3pane_fresh.png}\caption{RStudio running R 4.2.2}
@@ -129,10 +147,8 @@ log(10, base = 10)
 log(10, base = 2)
 ```
 The function `getwd` takes no arguments, and returns a string with the current working directory, which is the path to the directory (folder) where R by default reads and writes files^[Note: R uses slashes (`/`), not backslashes (`\`), for separating file- and folder names in a path.]:
-```{r, echo=2}
-setwd("Z:/OmicsDataAnalysis/")
+```{r, output = TRUE}
 getwd()
-setwd(knitr::opts_knit$get()$root.dir)
 ```
 Note that you still need to add an (empty) pair of parentheses to indicate that you want the function to run, even though no argument is given.
 
@@ -189,11 +205,9 @@ a
 A
 ```
 In the same way, you can define objects that store the value of a character expression. Also, it can be helpful to have longer, more informative names for objects:
-```{r, echo=2:3}
-setwd("Z:/OmicsDataAnalysis/")
+```{r, output = TRUE}
 myWorkDir <- getwd()
 myWorkDir
-setwd(knitr::opts_knit$get()$root.dir)
 ```
 Note that this uses the function `getwd` from the previous example to return an informative character expression. The value of this function call is saved under the chosen object name, exactly as for the numerical expressions above.
 
@@ -327,7 +341,7 @@ This document comes with a data set `qPCR.txt` that contains the results of a sm
 
 We use `read.table` to import this data, which we directly save as object `ex1`. The argument `header=TRUE` tells `read.table` to use the first row as column names, and the argument `stringsAsFactors = TRUE` to import the character column directly as a factor variable:
 ```{r, eval=1, R.options = list(width = 60)}
-ex1 <- read.table("Z:/OmicsDataAnalysis/Data/qPCR.txt", 
+ex1 <- read.table("./Data/qPCR.txt", 
                   header = TRUE, stringsAsFactors = TRUE)
 ```
 
@@ -383,7 +397,7 @@ I suggest breaking down the workflow as follows:
 As demonstrated above, you can specify the full path to any file on the harddisk for reading it in via `read.table`. However, I recommend setting R's default directory, the _working directory_, right at the start of the analysis. This makes it easier to keep track of files that you generate while working with this specific data.
 
 The working directory can be set at the command prompt:
-```{r, eval = 1:2}
+```{r, eval = 2}
 setwd("Z:/OmicsDataAnalysis/")
 dir()
 ```
