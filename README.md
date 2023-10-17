@@ -1,18 +1,20 @@
 # QuickIntro2R-src
 
-This is the markdown + R source for a short introduction to R/RStudio. For a recent build, see [QuickIntro2R](https://github.com/alexploner/QuickIntro2R "QuickIntro2R - the document"). 
+This is the markdown + R source for a short introduction to R/RStudio, which can be compiled into a PDF file of ca. 20 pages. For a recent build, see [QuickIntro2R](https://github.com/alexploner/QuickIntro2R "QuickIntro2R - the document"). 
 
 ## Installation 
 
-Simple clone the repository to a convenient working directory, as in 
+Simply clone the repository to a convenient working directory, as in 
 
 ```
-git clone https://github.com/alexploner/QuickIntro2R-src
+git clone https://github.com/alexploner/QuickIntro2R-src.git
 ```
 
-All text and code are contained in QuickIntro2R.Rmd. You will need packages XXX
+All text and code are contained in Intro2R_short.Rmd. You will need to have R packages `tufte` and `tint` (as well as their dependencies) installed to be able to build the document.
 
 ## Setup 
+
+
 
 ## Licence
 
