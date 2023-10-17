@@ -12,6 +12,11 @@ header-includes:
 -   \renewcommand{\headrulewidth}{1pt}
 ---
 
+```{r licence, include = FALSE}
+## This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 
+## International License, see http://creativecommons.org/licenses/by-nc-sa/4.0/
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, prompt = TRUE, comment = NA, collapse = TRUE)
 ## Note that we selectively pretend that our data/work directory is something 
