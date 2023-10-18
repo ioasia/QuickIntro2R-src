@@ -27,8 +27,8 @@ knitr::opts_chunk$set(echo = TRUE, prompt = TRUE, comment = NA, collapse = TRUE)
 ## Set your directories here: .showDir is what is displayed, .trueDir is the 
 ## place where we actually store the data, which is just the faux project directory
 ##  that comes with this .Rmd file
-.showDir <- "Z:/OmicsDataAnalysis/"
-.trueDir <- normalizePath("./proj")
+.showDir <- "Z:/OmicsDataAnalysis"
+.trueDir <- normalizePath("./proj", winslash = "/")
 ## Set this for knitr
 knitr::opts_knit$set(root.dir = .trueDir)
 ## We manage this via output hooks that 
@@ -43,6 +43,14 @@ local({
     hook_old(substitute_dir(x), options)
   })
   ## NOTE: for source, we replace the actual string .trueDir with the content of .showDir
+	substitute_dir_q <- function(x)
+	{
+		gsub(".trueDir", paste0("\"", .showDir, "\""), x, fixed = TRUE)
+	}
+  hook_old <- knitr::knit_hooks$get("source")  # save the old hook
+  knitr::knit_hooks$set(source = function(x, options) {
+  	hook_old(substitute_dir_q(x), options)
+  })
 })
 ```
 
@@ -346,9 +354,12 @@ The `Environment`-pane offers shortcuts for importing other types of common data
 This document comes with a data set `qPCR.txt` that contains the results of a small qPCR experiment, where the expression of a target gene in treated _Arabidopsis thaliana_ plants was compared to untreated controls plants, at four different concentrations, each with three replicates.^[[PMC1395339](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1395339/#T1)] Consequently, the file contains 24 measurements of the relative expression level of the target gene compared to a reference gene (`DeltaCt`), together with the corresponding treamtent status (`Sample`) and concentration (`Con`); variable names are listed in the first row of the file.
 
 We use `read.table` to import this data, which we directly save as object `ex1`. The argument `header=TRUE` tells `read.table` to use the first row as column names, and the argument `stringsAsFactors = TRUE` to import the character column directly as a factor variable:
-```{r, eval=1, R.options = list(width = 60)}
-ex1 <- read.table("./Data/qPCR.txt", 
-                  header = TRUE, stringsAsFactors = TRUE)
+```{r, R.options = list(width = 60), echo = FALSE}
+code <- paste0("ex1 <- read.table(\"",.trueDir, "/Data/qPCR.txt\", header = TRUE, stringsAsFactors = TRUE)")
+eval(parse(text = code))
+code <- sub(.trueDir, .showDir, code)
+code <- strwrap(code, width = 60, prefix = "", initial = "")
+cat(paste0(code, "\n"))
 ```
 
 
@@ -403,8 +414,8 @@ I suggest breaking down the workflow as follows:
 As demonstrated above, you can specify the full path to any file on the harddisk for reading it in via `read.table`. However, I recommend setting R's default directory, the _working directory_, right at the start of the analysis. This makes it easier to keep track of files that you generate while working with this specific data.
 
 The working directory can be set at the command prompt:
-```{r, eval = 2}
-setwd("Z:/OmicsDataAnalysis/")
+```{r}
+setwd(.trueDir)
 dir()
 ```
 Note that my working directory has a number of sub-folders, which is generally a good idea if your project involves more than a handful of files.
