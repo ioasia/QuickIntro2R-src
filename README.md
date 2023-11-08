@@ -4,17 +4,41 @@ This is the markdown + R source for a short introduction to R/RStudio, which can
 
 ## Installation 
 
-Simply clone the repository to a convenient working directory, as in 
+Clone the repository to a convenient working directory by running
 
 ```
 git clone https://github.com/alexploner/QuickIntro2R-src.git
 ```
 
-All text and code are contained in Intro2R_short.Rmd. You will need to have R packages `tufte` and `tint` (as well as their dependencies) installed to be able to build the document.
+in a shell in the intended directory. All text and code are contained in file `Intro2R_short.Rmd`. 
+
+You will also need to have R packages `tufte` and `tint` installed to be able to build the document, so you may need to run 
+
+```
+install.packages(c("tufte", "tint"))
+```
+
+at the R prompt. 
 
 ## Setup 
 
+For the in-document examples, the document pretends to read files from a fictituous directory, by default `Z:/OmicsDataAnalysis` (i.e. we are pretending to be on a Wondows machine). This fictitious directory is defined in a freely modifiable string at the top of the document, in line
 
+```
+.showDir <- "Z:/OmicsDataAnalysis"
+```
+
+If you want to display a different location in the compiled document, just edit the string as required.
+
+## Compilation
+
+The PDF file can be built via the R command line as
+
+```
+rmarkdown::render("Intro2R_short.Rmd")
+```
+
+or knitted as usually from within the RStudio Source pane (choose `Knit to tintPDF`). 
 
 ## Licence
 
