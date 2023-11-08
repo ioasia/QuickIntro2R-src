@@ -38,18 +38,18 @@ local({
 	{
 		gsub(.trueDir, .showDir, x, fixed = TRUE)
 	}
-  hook_old <- knitr::knit_hooks$get("output")  # save the old hook
+  hook_old_output <- knitr::knit_hooks$get("output")  # save the old hook
   knitr::knit_hooks$set(output = function(x, options) {
-    hook_old(substitute_dir(x), options)
+    hook_old_output(substitute_dir(x), options)
   })
   ## NOTE: for source, we replace the actual string .trueDir with the content of .showDir
 	substitute_dir_q <- function(x)
 	{
 		gsub(".trueDir", paste0("\"", .showDir, "\""), x, fixed = TRUE)
 	}
-  hook_old <- knitr::knit_hooks$get("source")  # save the old hook
+  hook_old_source <- knitr::knit_hooks$get("source")  # save the old hook
   knitr::knit_hooks$set(source = function(x, options) {
-  	hook_old(substitute_dir_q(x), options)
+  	hook_old_source(substitute_dir_q(x), options)
   })
 })
 ```
