@@ -334,7 +334,7 @@ dat$x
 mean(dat$x)
 ```
 
-In short, a data frame is the R implementation of the standard format for analysis data in statistical software, the data matrix, given as subject rows $\times$ variable columns.^[Note that the convention is different in e.g. bioinformatics, where generally rows correspond to features (variables), and columns to samples (subjects). This is the source of much hilarious confusion.]
+In short, a data frame is the R implementation of the standard format for analysis data in statistical software, the data matrix, given as subject rows $\times$ variable columns.^[Note that the convention is different in e.g. bioinformatics, where generally rows correspond to features (variables), and columns to samples (subjects). This has been historically the source of much hilarity & debugging.]
 
 
 ## Getting data into R
@@ -461,7 +461,7 @@ The first argument in this function call is a _formula_, an R construction that 
 
 With regard to the plot itself, we see that the expression levels are clearly higher among controls than among cases, and that there is a suspiciously large value among the controls - interesting for the report?
 
-Base graphics look a rather old-fashioned, but are straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the scope of this document.
+Base graphics look rather old-fashioned, but are straightforward to create, and can be prettified in many ways, using titles, labels, colors, fonts etc., all of which goes beyond the scope of this document.
 
 ## Statistical tests
 
@@ -482,7 +482,7 @@ For the current example, a simple t-test for the null hypothesis that the mean g
 ## - I did not manage to override the source hook as shown e.g. 
 ##   https://bookdown.org/yihui/rmarkdown-cookbook/output-hooks.html
 ##
-## I sincerely apologize for the hack FIXME
+## I sincerely apologize for this hack
 t.test <- function(...) {ret <- stats::t.test(...); class(ret) <- "htest2"; ret} 
 print.htest2 <- function(x){
   tt    <- capture.output(stats:::print.htest(x))
@@ -510,9 +510,9 @@ The results here are very similar to the results in Table 3 of the original publ
 
 ## Export results
 
-Results to be included in a report can be exported manually: text output can be selected in the console, copied to the clipboard, and pasted into the target document. Graphs can be extracted via the `Export`-menu in the plot tab, and either be saved to an image file, or again copied to the clipboard.^[In base R, the same functionality is available via right-clicking the plot window] 
+Results to be included in a report can be exported manually: text output can be selected in the console, copied to the clipboard, and pasted into the target document; graphs can be extracted via the `Export`-menu in the plot tab, and either be saved to an image file, or again copied to the clipboard.^[In base R, the same functionality is available via right-clicking the plot window] 
 
-Manual export / copying and pasting is reasonably fast and convenient for a few numbers and plots, but generally not recommended, because it breaks the connection between the R code use to generate the results and the results themselves: this is a common source of errors that is hard to track. It also has to be repeated whenever the data or the analysis changes, and formatting even moderately large result tables becomes very time consuming.
+Manual export / copying and pasting is reasonably fast and convenient for a few numbers and plots, but generally not recommended, because it breaks the connection between the R code used to generate the results and the results themselves: this is a common source of errors that is hard to track. It also has to be repeated whenever the data or the analysis changes, and formatting even moderately large result tables becomes very time consuming.
 
 Therefore, results should generally be exported as part of an analysis script that automates both analysis and extraction of the desired results, see R Scripts below.
 
@@ -552,7 +552,7 @@ Packages are mostly available through curated online collections, i.e. _reposito
 
 1. The most important and default repository is CRAN, the Comprehensive R Archive Network, with currently more than 18,000 packages covering an extremely wide range of applications. 
 
-2. Bioconductor is another large (currently more than 2,000 packages) collection, focused on high-throughput genomic data.
+2. Bioconductor is another large (currently more than 2,000 packages) collection, focused on high-throughput molecular data.
 
 \begin{marginfigure}
 \centering 
@@ -561,7 +561,7 @@ Packages are mostly available through curated online collections, i.e. _reposito
 
 
 
-The curation process for these repositories ensures minimal standards of software quality and documentation. Other sources which also host many R packages for download, like github^[[github.com/topics/r?l=r](https://github.com/topics/r?l=r)], lack these standards, leading to more variable package quality. 
+The curation process for these repositories ensures a certain minimal standard of software quality and documentation^[See R start-up message, though]. Other sources which also host many R packages for download, like github^[[github.com/topics/r?l=r](https://github.com/topics/r?l=r)], lack these standards, leading to more variable package quality. 
 
 ## Installation vs Loading
 
@@ -617,7 +617,7 @@ Note that Bioconductor packages have a different installation process, demonstra
 
 ## Finding more useful packages
 
-As it is often difficult identify just the right package required for a task simply through search engines, both CRAN and Bioconductor offer curated lists of packages that can be used for specific application areas:
+As it is often difficult to identify just the right package required for a task simply through search engines, both CRAN and Bioconductor offer curated lists of packages that can be used for specific application areas:
 
 * For CRAN, these are _task views_^[[cran.r-project.org/web/views/](https://cran.r-project.org/web/views/)]
 
@@ -661,13 +661,13 @@ This text file is then opened in the **Source**-pane of RStudio, which is an int
 * tab-expansion for R functions, function arguments and file names works,
 * some or all of the commands can be selected and run at the console, either via the `Run`-Button at the top of the editor pane, or by pressing `Ctrl-Return`at the same time.
 
-Once the newly generated R script with the recycled commands has been generated, it should be save directly under a suitable file name with the extension `.R`. 
+Once the R script with the recycled commands has been generated, it should be save directly under a suitable file name with the extension `.R`. 
 
 ## Adding comments
 
-Comments are text in the script that is ignored when the commands are run: this is information that helps the person reading, editing or running the script to understand what it does, and how it does it. Comments provide context and are crucial making an analysis script _easily_ replicable and modifiable. 
+Comments are text in the script that is ignored when the commands are run: this is information that helps the person reading, editing or running the script to understand what it does, and how it does it. Comments provide context and are crucial for making an analysis script _easily_ replicable and modifiable. 
 
-Note that the person that will read, edit etc. the script and needs to understand it may be an internal or external collaborator, but is most likely _yourself in six months_: writing good comments means that you are making your own life easier. 
+Note that the person who will read, edit etc. the script, and who needs to understand it, may be an internal or external collaborator, but is most likely _yourself in six months_: writing good comments means that you are making your future life easier. 
 
 Comments are easy to add: R/RStudio will ignore any text after a hashtag `#` until the end of the current line.
 
@@ -698,7 +698,7 @@ This technique can be greatly expanded to generate e.g. nicely formatted reports
 
 # Other Resources
 
-* CRAN user contributed documentation of varying length^[[cran.r-project.org/other-docs.html](https://cran.r-project.org/other-docs.html)]
+* CRAN user contributed documentation of varying length (old, no longer maintained)^[[cran.r-project.org/other-docs.html](https://cran.r-project.org/other-docs.html)]
 * RStudio cheatsheets: 1-page summaries on how to use RStudio, specific packages, or perform specific packages^[[https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)]
 * Bioconductor common workflows show how Bioconductor packages can work together^[[bioconductor.org/packages/release/workflows/](http://bioconductor.org/packages/release/workflows/)]
 * Bioconducor user-contributed documentation^[[http://bioconductor.org/help/community/](http://bioconductor.org/help/community/)]
