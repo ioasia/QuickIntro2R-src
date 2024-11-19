@@ -1,0 +1,91 @@
+---
+title: "qPCR_analysis"
+author: "Student"
+date: "2024-11-19"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+
+## Introduction
+
+This report analyzes a qPCR dataset (`ex1`) containing sample groups (Control and Treatment), concentrations, and ΔCt values. The goal is to:
+- Compare ΔCt values between the Control and Treatment groups.
+- Visualize the distributions.
+- Compile a reproducible analysis.
+
+---
+
+## Step 1: Load and Explore the Data
+```{r load-data, echo=TRUE}
+### Load data 
+ex1 <- read.table('proj/Data/qPCR.txt',header=TRUE, stringsAsFactors = TRUE)
+
+
+### Structure of the Data
+# Check structure and first few rows of the dataset
+str(ex1)
+head(ex1)
+summary(ex1)
+```
+
+
+## Step 2: Calculate mean and standard deviation per group
+
+```{r mean-sd, echo=TRUE}
+#install.packages(dplyr)
+library(dplyr)
+
+# Group statistics
+group_stats <- ex1 %>%
+  group_by(Sample) %>%
+  summarise(
+    Mean_Delta_Ct = mean(DeltaCt, na.rm = TRUE),
+    SD_Delta_Ct = sd(DeltaCt, na.rm = TRUE)
+  )
+print(group_stats)
+
+# Perform a t-test
+wilcoxon_test <- wilcox.test(DeltaCt ~ Sample, data = ex1)
+print(wilcoxon_test)
+```
+## Step 3: Visualize groups deltaCt
+
+```{r plot, echo=TRUE}
+
+# Load ggplot2 for visualization
+# install.packages(ggplot2)
+library(ggplot2)
+
+# Create the boxplot
+plot <- ggplot(ex1, aes(x = Sample, y = DeltaCt, fill = Sample)) +
+  geom_boxplot() +
+  labs(
+    title = "ΔCt Distribution by Group",
+    x = "Sample Group",
+    y = "ΔCt"
+  ) +
+  theme_minimal()
+
+# Display the plot
+print(plot)
+
+# Save the plot as a PNG file
+ggsave("qpcr_delta_ct_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
+
+```
+
+
+
